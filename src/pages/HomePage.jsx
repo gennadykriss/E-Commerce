@@ -1,4 +1,5 @@
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import CatalogGrid from "../components/CatalogGrid";
 
 export const HomePage = () => {
@@ -9,6 +10,8 @@ export const HomePage = () => {
       <main>
         <CatalogGrid />
       </main>
+
+      <Footer />
 
     </div>
   );

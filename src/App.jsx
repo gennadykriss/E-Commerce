@@ -1,6 +1,6 @@
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
-import HomePage    from './pages/HomePage';
+import {HomePage}    from './pages/HomePage';
 import NotFoundPage    from './pages/NotFoundPage';
 
 export default function App() {

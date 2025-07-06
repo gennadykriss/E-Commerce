@@ -8,10 +8,9 @@ export default function LandingPage() {
 
   const [market, setMarket] = useState('Canada')
   const [lang,   setLang]   = useState('English')
-  const [gender, setGender] = useState({ Women: false, Men: false })
+  const [collection, setCollection] = useState('')
 
   const handleContinue = () => {
-    // TODO: maybe save prefs to localStorage
     navigate('/home')
   }
 
@@ -65,15 +64,24 @@ export default function LandingPage() {
           <div>
             <span className="block text-xs text-gray-500 mb-1">GO TO COLLECTION</span>
             <div className="flex items-center space-x-6">
-              {['Women','Men'].map(g => (
-                <label key={g} className="flex items-center space-x-2 text-sm">
+              {['Women', 'Men'].map((g) => (
+                <label key={g} className="flex items-center space-x-2 text-sm cursor-pointer">
                   <input
-                    type="checkbox"
-                    checked={gender[g]}
-                    onChange={() =>
-                      setGender(prev => ({ ...prev, [g]: !prev[g] }))
-                    }
-                    className="form-checkbox h-4 w-4 text-black"
+                    type="radio"
+                    name="collection"
+                    value={g}
+                    checked={collection === g}
+                    onChange={() => setCollection(g)}
+                    className="
+                      appearance-none 
+                      h-4 w-4 
+                      border border-gray-300 
+                      rounded-none 
+                      checked:bg-black 
+                      checked:border-black 
+                      focus:outline-none
+                      transition
+                    "
                   />
                   <span>{g.toUpperCase()}</span>
                 </label>

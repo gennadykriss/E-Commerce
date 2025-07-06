@@ -1,111 +1,100 @@
-// src/components/NavBar.jsx
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-// Full menu data
+/* Only categories you actually have in data.products */
 const MENU = {
-  Women: [
-    'Sale',
-    'Up to 40% off',
-    "Summer's last call",
-    'Linen',
-    'Polo shirts',
-    'Shirts',
-    'T-shirts',
-    'Short sleeved',
-    'Sweaters & cardigans',
-    'Trousers',
-    'Jeans',
-    'Bermuda shorts & swimwear',
-    'Suits',
-    'Jackets & trench coats',
-    'Leather jackets',
-    'Overshirts & blazers',
-    'Shoes',
-    'Accessories & homewear',
-    'View all',
-    'Shop by size'
-  ],
-  Men: [
-    'New in',
-    'Linen',
-    'Shirts',
-    'Polo shirts',
-    'T-shirts',
-    'Short sleeved',
-    'Sweaters & cardigans',
-    'Trousers',
-    'Jeans',
-    'Bermuda shorts & swimwear',
-    'Suits',
-    'Jackets & trench coats',
-    'Leather jackets',
-    'Overshirts & blazers',
-    'Shoes',
-    'Accessories & homewear',
-    'View all',
-    'Shop by size'
-  ]
-}
+  Women: ['Dresses', 'Shirts', 'Knitwear', 'Trousers', 'Footwear', 'Accessories'],
+  Men:   ['Blazers', 'Shirts', 'Knitwear', 'Trousers', 'Outerwear', 'Footwear'],
+};
+
+/* menu label → search token */
+const TOKEN = {
+  Blazers:    'blazer',
+  Knitwear:   'knitwear',
+  Shirts:     'shirt',
+  Trousers:   'trousers',
+  Outerwear:  'outerwear',
+  Footwear:   'footwear',
+  Dresses:    'dress',
+  Accessories:'accessory',
+};
 
 export default function NavBar() {
-  const [activeTab, setActiveTab]   = useState(null)   // 'Women' | 'Men'
-  const [mobileOpen, setMobileOpen] = useState(false)  // drawer open?
+  const navigate = useNavigate();
+  const { pathname, state } = useLocation();
+
+  // default tab = last gender sent from landing page, else Women
+  const initialTab = state?.gender || 'Women';
+  const [activeTab, setActiveTab] = useState(initialTab);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  /** Navigate to /search and pre-fill the query with selected category */
+ const goToSearch = (label) => {
+  const token = TOKEN[label] || label;          
+  navigate('/search', {
+    state: { gender: activeTab, initialQuery: token },
+  });
+  setMobileOpen(false);
+};
 
   return (
     <>
-      <nav className="flex items-center justify-between px-6 py-4 border-b">
-        {/* Hamburger */}
+      {/* ------------ TOP BAR ------------ */}
+      <nav className="flex items-center justify-between px-6 py-4">
+        {/* Hamburger (mobile) */}
         <button
           onClick={() => setMobileOpen(true)}
-          className="text-2xl leading-none"
           aria-label="Open menu"
+          className="text-2xl leading-none"
         >
           ≡
         </button>
 
-
-        {/* Right group */}
+        {/* Right-hand links */}
         <div className="flex items-center space-x-8">
-          <Link
-            to="/search"
-            className="uppercase text-sm tracking-wide pb-1 px-25 border-b border-black hover:text-gray-700"
-          >
-            Search
-          </Link>
-          <Link
-            to="/account"
-            className="uppercase text-sm tracking-wide hover:text-gray-700"
-          >
+          {pathname !== '/search' && (
+            <Link
+              to="/search"
+              className="uppercase text-sm tracking-wide pb-1 border-b border-black hover:text-gray-700"
+            >
+              Search
+            </Link>
+          )}
+          <Link to="/account" className="uppercase text-sm tracking-wide hover:text-gray-700">
             My Account
           </Link>
-          <Link
-            to="/bag"
-            className="uppercase text-sm tracking-wide hover:text-gray-700"
-          >
+          <Link to="/bag" className="uppercase text-sm tracking-wide hover:text-gray-700">
             Bag
           </Link>
         </div>
       </nav>
 
-      {/* Mobile Drawer */}
+      {/* ------------ MOBILE DRAWER ------------ */}
       {mobileOpen && (
         <div className="fixed inset-0 z-50 flex">
-          {/* Drawer panel */}
+          {/* Panel */}
           <div className="w-3/4 max-w-xs bg-white shadow-lg flex flex-col overflow-y-auto">
-            {/* Close */}
+            {/* Close button */}
             <div className="p-4 border-b flex justify-end">
               <button onClick={() => setMobileOpen(false)} className="text-2xl">
                 ×
               </button>
             </div>
+
             {/* Brand */}
-            <div className="px-6 py-4 border-b">
-              <h1 className="font-serif text-2xl">Brunelli Alta</h1>
-            </div>
-            {/* Tabs */}
+          <div className="px-6 py-4 border-b">
+            <Link
+              to="/home"
+              onClick={() => setMobileOpen(false)}   /* close drawer */
+              className="block font-serif text-2xl"
+            >
+              Brunelli Alta
+            </Link>
+          </div>
+
+            {/* Gender tabs */}
             <div className="px-6 py-4 border-b flex space-x-6">
-              {['Women','Men'].map(tab => (
+              {['Women', 'Men'].map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
@@ -117,30 +106,26 @@ export default function NavBar() {
                 </button>
               ))}
             </div>
-            {/* Category list */}
-            {activeTab && (
-              <ul className="px-6 py-4 space-y-3">
-                {MENU[activeTab].map(item => (
-                  <li key={item}>
-                    <Link
-                      to={`/${activeTab.toLowerCase()}`}
-                      className="block text-sm hover:underline"
-                    >
-                      {item}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            )}
+
+            {/* Category links */}
+            <ul className="px-6 py-4 space-y-3">
+              {MENU[activeTab].map((cat) => (
+                <li key={cat}>
+                  <button
+                    onClick={() => goToSearch(cat)}
+                    className="block w-full text-left text-sm hover:underline"
+                  >
+                    {cat}
+                  </button>
+                </li>
+              ))}
+            </ul>
           </div>
 
           {/* Backdrop */}
-          <div
-            className="flex-1 bg-black/30"
-            onClick={() => setMobileOpen(false)}
-          />
+          <div className="flex-1 bg-black/30" onClick={() => setMobileOpen(false)} />
         </div>
       )}
     </>
-  )
+  );
 }

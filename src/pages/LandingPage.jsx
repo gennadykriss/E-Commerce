@@ -11,7 +11,7 @@ export default function LandingPage() {
   const [collection, setCollection] = useState('')
 
   const handleContinue = () => {
-    navigate('/home')
+    navigate('/home', { state: { gender: collection || 'Women' } });
   }
 
   return (

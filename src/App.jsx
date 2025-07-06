@@ -3,6 +3,7 @@ import LandingPage from './pages/LandingPage';
 import {HomePage}    from './pages/HomePage';
 import NotFoundPage    from './pages/NotFoundPage';
 import SurveyPage from './pages/SurveryPage';
+import SearchPage from './pages/SearchPage';
 
 export default function App() {
   return (
@@ -12,6 +13,7 @@ export default function App() {
             <Route path="/home" element={<HomePage />} />
             <Route path="*" element={<NotFoundPage />} />
             <Route path="/survey" element={<SurveyPage />} />
+            <Route path="/search" element={<SearchPage />} />
           </Routes>
     </BrowserRouter>
   );

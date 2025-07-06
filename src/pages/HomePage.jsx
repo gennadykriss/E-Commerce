@@ -1,4 +1,5 @@
 import Navbar from "../components/Navbar";
+import CatalogGrid from "../components/CatalogGrid";
 
 export const HomePage = () => {
   return (
@@ -6,7 +7,7 @@ export const HomePage = () => {
       <Navbar/>
       {/* Main Content */}
       <main>
-     
+        <CatalogGrid />
       </main>
 
     </div>

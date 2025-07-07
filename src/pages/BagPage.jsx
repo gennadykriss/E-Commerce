@@ -3,6 +3,7 @@ import { useCart } from '../context/CartContext';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
+import Breadcrumb from '../components/Breadcrumb';
 
 
 export default function BagPage() {
@@ -43,6 +44,7 @@ export default function BagPage() {
       {/* ---------------- CART LIST ---------------- */}
       {stage === 'cart' && (
         <section className="mx-auto max-w-4xl flex-grow px-6 py-12 space-y-8">
+          <Breadcrumb stage="cart" />
           <h1 className="text-2xl font-medium">Your Bag</h1>
 
           {list.length === 0 && <p>Your bag is empty.</p>}
@@ -102,6 +104,7 @@ export default function BagPage() {
       {/* ---------------- CHECKOUT FORM ---------------- */}
       {stage === 'form' && (
         <section className="mx-auto max-w-xl flex-grow px-6 py-12 space-y-8">
+          <Breadcrumb stage="form" />
           <h1 className="text-2xl font-medium">Checkout</h1>
 
           <form onSubmit={handlePlaceOrder} className="space-y-6">
@@ -145,6 +148,7 @@ export default function BagPage() {
       {/* ---------------- CONFIRMATION ---------------- */}
       {stage === 'done' && (
         <section className="mx-auto max-w-md flex-grow px-6 py-20 text-center space-y-6">
+          <Breadcrumb stage="done" />
           <h1 className="text-2xl font-medium">Thank you!</h1>
           <p className="text-sm">
             Your order has been placed. A confirmation email will be sent to you.

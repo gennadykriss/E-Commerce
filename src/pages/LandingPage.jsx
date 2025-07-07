@@ -54,8 +54,6 @@ export default function LandingPage() {
               onChange={e => setLang(e.target.value)}
             >
               <option>English</option>
-              <option>Français</option>
-              <option>Español</option>
               {/* …add more */}
             </select>
           </div>

@@ -4,6 +4,7 @@ import {HomePage}    from './pages/HomePage';
 import NotFoundPage    from './pages/NotFoundPage';
 import SurveyPage from './pages/SurveryPage';
 import SearchPage from './pages/SearchPage';
+import BagPage from './pages/BagPage';
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
             <Route path="*" element={<NotFoundPage />} />
             <Route path="/survey" element={<SurveyPage />} />
             <Route path="/search" element={<SearchPage />} />
+            <Route path="bag" element={<BagPage />} />
           </Routes>
     </BrowserRouter>
   );

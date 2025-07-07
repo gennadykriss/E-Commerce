@@ -8,43 +8,28 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 export default function SearchPage() {
-  /* ------------------------------------------------------------
-     1.  Grab location.state every time it changes
-  ------------------------------------------------------------ */
-  const location = useLocation(); // { pathname, search, hash, state, … }
-
-  /* initial query is whatever NavBar sent last (may be undefined) */
-  const [query,   setQuery]   = useState(location.state?.initialQuery || '');
+  // 1. Grab location.state every time it changes
+  const location = useLocation();
+  const [query, setQuery] = useState(location.state?.initialQuery || '');
   const [results, setResults] = useState(products);
 
-  /* ------------------------------------------------------------
-     2.  When NavBar pushes a NEW initialQuery, sync it into state
-  ------------------------------------------------------------ */
+  // 2. When NavBar pushes a NEW initialQuery, sync it into state
   useEffect(() => {
     if (location.state?.initialQuery != null) {
       setQuery(location.state.initialQuery);
     }
   }, [location.state?.initialQuery]);
 
-  /* ------------------------------------------------------------
-     3.  Filter products whenever query changes
-  ------------------------------------------------------------ */
+  // 3. Filter products whenever query changes
   useEffect(() => {
     const term = query.trim().toLowerCase();
     if (!term) {
       setResults(products);
       return;
     }
-
     setResults(
       products.filter((p) =>
-        [
-          p.title,
-          p.color,
-          p.material,
-          p.type,
-          p.gender,
-        ]
+        [p.title, p.color, p.material, p.type, p.gender]
           .join(' ')
           .toLowerCase()
           .includes(term)
@@ -52,14 +37,9 @@ export default function SearchPage() {
     );
   }, [query]);
 
-  /* simple setter so <input> stays controlled */
-  const handleSearch = (q) => setQuery(q);
-
-  /* ------------------------------------------------------------
-     4.  Render
-  ------------------------------------------------------------ */
+  // 4. Render
   return (
-    <>
+    <div className="flex min-h-screen flex-col justify-between">
       {/* ───── NAVBAR ───── */}
       <Navbar />
 
@@ -70,7 +50,7 @@ export default function SearchPage() {
             type="text"
             value={query}
             placeholder="SEARCH IN CLOTHING FOR AN ITEM, COLOR, COLLECTION…"
-            onChange={(e) => handleSearch(e.target.value)}
+            onChange={(e) => setQuery(e.target.value)}
             className="
               w-full bg-transparent
               py-3
@@ -90,7 +70,7 @@ export default function SearchPage() {
       </section>
 
       {/* ───── RESULTS GRID ───── */}
-      <section className="pt-10">
+      <section className="pt-10 flex-1">
         <div
           className="
             mx-auto max-w-8xl px-4
@@ -111,8 +91,7 @@ export default function SearchPage() {
       </section>
 
       {/* ───── FOOTER ───── */}
-      <div className="h-12" />
       <Footer />
-    </>
+    </div>
   );
 }

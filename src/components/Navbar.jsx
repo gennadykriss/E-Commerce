@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 
 /* Only categories you actually have in data.products */
 const MENU = {
@@ -22,6 +23,7 @@ const TOKEN = {
 export default function NavBar() {
   const navigate = useNavigate();
   const { pathname, state } = useLocation();
+  const { itemCnt } = useCart(); 
 
   // default tab = last gender sent from landing page, else Women
   const initialTab = state?.gender || 'Women';
@@ -51,7 +53,7 @@ export default function NavBar() {
         </button>
 
         {/* Right-hand links */}
-        <div className="flex items-center space-x-8">
+        <div className="flex items-center space-x-8 mr-30">
           {pathname !== '/search' && (
             <Link
               to="/search"
@@ -61,10 +63,10 @@ export default function NavBar() {
             </Link>
           )}
           <Link to="/account" className="uppercase text-sm tracking-wide hover:text-gray-700">
-            My Account
+           
           </Link>
           <Link to="/bag" className="uppercase text-sm tracking-wide hover:text-gray-700">
-            Bag
+            Bag{itemCnt > 0 && ` (${itemCnt})`}
           </Link>
         </div>
       </nav>

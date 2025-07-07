@@ -20,22 +20,19 @@ export default function SurveyPage() {
   }
 
   return (
-    <div className="flex h-screen">
+    <div className="flex min-h-screen flex-col justify-between">
       {/* Left image panel */}
-      <div
-        className="flex-1 bg-contain bg-center relative"
-        style={{ backgroundImage: `url(${runawayImg})` }}
-      >
+      <div className="flex flex-1 bg-contain bg-center relative" style={{ backgroundImage: `url(${runawayImg})` }}>
         <div className="absolute inset-0 bg-black/30" />
-        <h1 className="absolute left-20 bottom-70 text-white text-5xl font-serif">
-          Brunelli Alta
-        </h1>
+        <h1 className="absolute left-20 bottom-70 text-white text-5xl font-serif">Brunelli Alta</h1>
       </div>
 
       {/* Right form panel */}
       <div className="flex-1 bg-white flex flex-col justify-center px-8 sm:px-16 py-8 relative">
         <div className="bg-gray-100 rounded-lg shadow-md p-8 space-y-8 w-full max-w-md mx-auto">
           <h2 className="text-xl font-semibold text-gray-800">How Did We Do?</h2>
+      {/* Optionally add a footer here if you want it at the bottom */}
+      {/* <Footer /> */}
 
           {/* Question 1 */}
           <div>

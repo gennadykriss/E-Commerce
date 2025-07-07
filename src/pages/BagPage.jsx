@@ -1,8 +1,9 @@
-// src/pages/BagPage.jsx
 import { useState } from 'react';
 import { useCart } from '../context/CartContext';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { Link } from 'react-router-dom';
+
 
 export default function BagPage() {
   const { items, total, removeItem, updateQty, clearCart } = useCart();
@@ -148,14 +149,24 @@ export default function BagPage() {
           <p className="text-sm">
             Your order has been placed. A confirmation email will be sent to you.
           </p>
-          <button
+          
+          <div className="flex flex-col sm:flex-row gap-4 mt-6">
+            <button
             onClick={() => setStage('cart')}
-            className="mx-auto mt-6 bg-black px-6 py-2 text-white"
-          >
-            Continue shopping
-          </button>
+            className="flex-1 py-3 bg-black text-white uppercase tracking-wide hover:bg-gray-800 transition"
+            >
+              Continue Shopping
+            </button>
+            <Link
+              to="/survey"
+              className="flex-1 py-3 border border-black text-black text-center uppercase tracking-wide hover:bg-gray-100 transition"
+            >
+              How Did We Do?
+            </Link>
+          </div>
         </section>
       )}
+
 
       <Footer className="mt-auto" />
     </div>
